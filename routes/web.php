@@ -8,6 +8,7 @@ use App\Http\Controllers\SchoolAdmin\DashboardController as SchoolAdminDashboard
 use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
 use App\Http\Controllers\ParentUser\DashboardController as ParentDashboardController;
+use App\Http\Controllers\WebsiteAdmin\SchoolController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +28,6 @@ Route::middleware('guest')->group(function () {
 
     Route::post('/login', [LoginController::class, 'store'])
         ->name('login.store');
-
 });
 
 
@@ -56,6 +56,28 @@ Route::middleware('auth')->group(function () {
             Route::get('/dashboard', [WebsiteAdminDashboardController::class, 'index'])
                 ->name('dashboard');
 
+            Route::get(
+                '/schools',
+                [SchoolController::class, 'index']
+            )->name('schools.index');
+
+
+            Route::get(
+                '/schools/create',
+                [SchoolController::class, 'create']
+            )->name('schools.create');
+
+
+            Route::post(
+                '/schools',
+                [SchoolController::class, 'store']
+            )->name('schools.store');
+
+
+            Route::get(
+                '/schools/{school}',
+                [SchoolController::class, 'show']
+            )->name('schools.show');
         });
 
 
@@ -70,7 +92,6 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/dashboard', [SchoolAdminDashboardController::class, 'index'])
                 ->name('dashboard');
-
         });
 
 
@@ -85,7 +106,6 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/dashboard', [TeacherDashboardController::class, 'index'])
                 ->name('dashboard');
-
         });
 
 
@@ -100,7 +120,6 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/dashboard', [StudentDashboardController::class, 'index'])
                 ->name('dashboard');
-
         });
 
 
@@ -115,7 +134,5 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/dashboard', [ParentDashboardController::class, 'index'])
                 ->name('dashboard');
-
         });
-
 });
