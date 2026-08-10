@@ -30,11 +30,18 @@
     {{ auth()->user()->role->label() }}
 </p>
 
+<hr>
 
-<form
-    method="POST"
-    action="{{ route('logout') }}"
->
+<h2>Akademik</h2>
+
+<p>
+    <a href="{{ route('school-admin.academic-years.index') }}">
+        Tahun Ajaran & Semester
+    </a>
+</p>
+
+
+<form method="POST" action="{{ route('logout') }}">
 
     @csrf
 
