@@ -1,0 +1,10 @@
+@extends('layouts.app')
+@section('title','Edit Tahun Ajaran')
+@section('content')
+@php($odd=$academicYear->semesters->firstWhere('name','Ganjil')) @php($even=$academicYear->semesters->firstWhere('name','Genap'))
+<div class="page-head"><div><h1>Edit Tahun Ajaran</h1><p>{{ $academicYear->name }}</p></div></div>
+<form method="POST" action="{{ route('school-admin.academic-years.update',$academicYear) }}">@csrf @method('PUT')
+<div class="card"><div class="form-grid"><div class="field"><label>Nama Tahun Ajaran *</label><input name="name" value="{{ old('name',$academicYear->name) }}" required></div><div></div><div class="field"><label>Mulai Tahun Ajaran *</label><input type="date" name="start_date" value="{{ old('start_date',$academicYear->start_date->format('Y-m-d')) }}" required></div><div class="field"><label>Selesai Tahun Ajaran *</label><input type="date" name="end_date" value="{{ old('end_date',$academicYear->end_date->format('Y-m-d')) }}" required></div></div></div>
+<div class="grid-2"><div class="card"><h2 class="section-title">Semester Ganjil</h2><div class="field"><label>Mulai *</label><input type="date" name="odd_start_date" value="{{ old('odd_start_date',$odd?->start_date?->format('Y-m-d')) }}" required></div><div class="field"><label>Selesai *</label><input type="date" name="odd_end_date" value="{{ old('odd_end_date',$odd?->end_date?->format('Y-m-d')) }}" required></div></div><div class="card"><h2 class="section-title">Semester Genap</h2><div class="field"><label>Mulai *</label><input type="date" name="even_start_date" value="{{ old('even_start_date',$even?->start_date?->format('Y-m-d')) }}" required></div><div class="field"><label>Selesai *</label><input type="date" name="even_end_date" value="{{ old('even_end_date',$even?->end_date?->format('Y-m-d')) }}" required></div></div></div>
+<div class="actions"><a class="btn" href="{{ route('school-admin.academic-years.index') }}">Batal</a><button class="btn btn-primary">Simpan Perubahan</button></div></form>
+@endsection

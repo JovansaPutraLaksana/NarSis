@@ -8,6 +8,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('parent.dashboard');
+        $parent = auth()->user()->parentProfile;
+        $children = $parent->students()->with('user')->get()->sortBy('user.name');
+
+        return view('parent.dashboard', compact('parent', 'children'));
     }
 }

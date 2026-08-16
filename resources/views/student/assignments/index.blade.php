@@ -1,0 +1,6 @@
+@extends('layouts.app')
+@section('title','Tugas')
+@section('content')
+<div class="page-head"><div><h1>Tugas</h1><p>Daftar tugas pada semester aktif.</p></div></div>
+<div class="table-wrap"><table><thead><tr><th>Tugas</th><th>Mata Pelajaran</th><th>Tenggat</th><th>Status</th><th>Nilai</th><th></th></tr></thead><tbody>@forelse($assignments as $assignment) @php($submission=$assignment->submissions->first())<tr><td><strong>{{ $assignment->title }}</strong></td><td>{{ $assignment->teachingAssignment->subject->name }}</td><td>{{ $assignment->due_at->format('d M Y H:i') }}</td><td>@if($submission)<span class="badge badge-success">Dikumpulkan</span>@elseif(now()->greaterThan($assignment->due_at))<span class="badge badge-danger">Terlambat</span>@else<span class="badge badge-warning">Belum dikumpulkan</span>@endif</td><td>{{ $submission?->score !== null ? $submission->score.' / '.$assignment->max_score : '-' }}</td><td><a class="btn btn-sm btn-primary" href="{{ route('student.assignments.show',$assignment) }}">Buka</a></td></tr>@empty<tr><td colspan="6" class="empty">Belum ada tugas.</td></tr>@endforelse</tbody></table></div>@if($assignments instanceof \Illuminate\Contracts\Pagination\Paginator)<div class="pagination">{{ $assignments->links() }}</div>@endif
+@endsection

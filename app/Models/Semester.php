@@ -5,19 +5,13 @@ namespace App\Models;
 use App\Models\Concerns\BelongsToSchool;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Semester extends Model
 {
     use BelongsToSchool;
 
-    protected $fillable = [
-        'school_id',
-        'academic_year_id',
-        'name',
-        'start_date',
-        'end_date',
-        'is_active',
-    ];
+    protected $fillable = ['school_id', 'academic_year_id', 'name', 'start_date', 'end_date', 'is_active'];
 
     protected function casts(): array
     {
@@ -31,5 +25,15 @@ class Semester extends Model
     public function academicYear(): BelongsTo
     {
         return $this->belongsTo(AcademicYear::class);
+    }
+
+    public function teachingAssignments(): HasMany
+    {
+        return $this->hasMany(TeachingAssignment::class);
+    }
+
+    public function schedules(): HasMany
+    {
+        return $this->hasMany(Schedule::class);
     }
 }

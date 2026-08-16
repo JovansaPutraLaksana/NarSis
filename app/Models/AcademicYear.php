@@ -10,13 +10,7 @@ class AcademicYear extends Model
 {
     use BelongsToSchool;
 
-    protected $fillable = [
-        'school_id',
-        'name',
-        'start_date',
-        'end_date',
-        'is_active',
-    ];
+    protected $fillable = ['school_id', 'name', 'start_date', 'end_date', 'is_active'];
 
     protected function casts(): array
     {
@@ -29,6 +23,11 @@ class AcademicYear extends Model
 
     public function semesters(): HasMany
     {
-        return $this->hasMany(Semester::class);
+        return $this->hasMany(Semester::class)->orderBy('start_date');
+    }
+
+    public function classes(): HasMany
+    {
+        return $this->hasMany(SchoolClass::class);
     }
 }

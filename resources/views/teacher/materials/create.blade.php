@@ -1,0 +1,6 @@
+@extends('layouts.app')
+@section('title','Upload Materi')
+@section('content')
+<div class="page-head"><div><h1>Upload Materi</h1><p>Materi langsung dipublikasikan ke siswa pada kelas terpilih.</p></div></div>
+<form method="POST" enctype="multipart/form-data" action="{{ route('teacher.materials.store') }}">@csrf<div class="card"><div class="form-grid"><div class="field full"><label>Kelas / Mata Pelajaran *</label><select name="teaching_assignment_id" required><option value="">- Pilih -</option>@foreach($assignments as $item)<option value="{{ $item->id }}" @selected((int)old('teaching_assignment_id')===$item->id)>{{ $item->schoolClass->name }} · {{ $item->subject->name }} · {{ $item->semester->name }}</option>@endforeach</select></div><div class="field full"><label>Judul Materi *</label><input name="title" value="{{ old('title') }}" required></div><div class="field full"><label>Deskripsi</label><textarea name="description">{{ old('description') }}</textarea></div><div class="field full"><label>File Materi</label><input type="file" name="file"><small>Maks. {{ number_format(config('narsis.upload_max_kb', 4096) / 1024, 1) }} MB. PDF, Office, ZIP, JPG/PNG.</small></div></div></div><div class="actions"><a class="btn" href="{{ route('teacher.materials.index') }}">Batal</a><button class="btn btn-primary">Publikasikan</button></div></form>
+@endsection
