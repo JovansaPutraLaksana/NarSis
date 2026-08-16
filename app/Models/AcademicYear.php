@@ -2,29 +2,33 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\BelongsToSchool;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class School extends Model
+class AcademicYear extends Model
 {
+    use BelongsToSchool;
+
     protected $fillable = [
-        'code',
+        'school_id',
         'name',
-        'address',
-        'phone',
-        'email',
+        'start_date',
+        'end_date',
         'is_active',
     ];
 
     protected function casts(): array
     {
         return [
+            'start_date' => 'date',
+            'end_date' => 'date',
             'is_active' => 'boolean',
         ];
     }
 
-    public function users(): HasMany
+    public function semesters(): HasMany
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Semester::class);
     }
 }
